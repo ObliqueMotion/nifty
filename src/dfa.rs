@@ -66,8 +66,8 @@ where
     }
 
     /// Returns an iterator over the `DFA`'s alphabet in no particular order.
-    pub fn alphabet(&self) -> impl Iterator<Item = T> + '_ {
-        self.transitions.keys().cloned()
+    pub fn alphabet(&self) -> impl Iterator<Item = &T> + '_ {
+        self.transitions.keys()
     }
 
     /// Returns the start state of the `DFA`.

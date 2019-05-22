@@ -7,10 +7,10 @@ The goal of this crate is not to be an efficient parsing library. Use a regex fo
 Rather, this crate aims to preserve the integrity of stepping through a DFA state diagram.   
 
 It allows you to build a DFA with states of a generic type `S` that recognizes a language
-whose symbols are of a generic type `T`. You can traverse each transition symbol one-by-one, or you can 
+whose symbols are of a generic type `T`. You can traverse each transition symbol one by one, or you can 
 consume an iterator of symbols, which the DFA will either `Accept` or `Reject`.
 
-DFAs are created through a DFABuilder, which ensures that the DFA has valid transitions for every symbol in the alphabet. 
+DFAs are created through a DFABuilder, which ensures that the DFA has valid transitions for every symbol in its alphabet. 
 
 ## Examples
 
