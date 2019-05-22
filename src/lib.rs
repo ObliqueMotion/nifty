@@ -13,7 +13,7 @@
 //!
 //! # Documentation
 //!
-//! [nifty::dfa](dfa/index.html) d
+//! [nifty::dfa](dfa/index.html)  
 //! [nifty::make_dfa!](macro.make_dfa!.html)
 //!
 //! # Examples
