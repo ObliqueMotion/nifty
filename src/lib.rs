@@ -72,35 +72,38 @@
 //!
 //! ```
 //! use nifty::make_dfa;
+//! 
+//! fn main() {
 //!
-//! let q0 = "Seen { }";
-//! let q1 = "Seen { b }";
-//! let q2 = "Seen { ba }";
-//! let q3 = "Seen { bab }";
+//!     let q0 = "Seen { }";
+//!     let q1 = "Seen { b }";
+//!     let q2 = "Seen { ba }";
+//!     let q3 = "Seen { bab }";
 //!
-//! let mut dfa = make_dfa! {
-//!     states { q0, q1, q2, q3 }
-//!     start  { q0 }
-//!     goal   { q3 }
-//!     transitions {
-//!         'a' => (q0, q0)
-//!         'a' => (q1, q2)
-//!         'a' => (q2, q0)
+//!     let mut dfa = make_dfa! {
+//!         states { q0, q1, q2, q3 }
+//!         start  { q0 }
+//!         goal   { q3 }
+//!         transitions {
+//!             'a' => (q0, q0)
+//!             'a' => (q1, q2)
+//!             'a' => (q2, q0)
 //!
-//!         'b' => (q0, q1)
-//!         'b' => (q1, q1)
-//!         'b' => (q2, q3)
-//!     }
-//!     recognizes {
-//!         "contains { bab }"
-//!     }
-//! };
+//!             'b' => (q0, q1)
+//!             'b' => (q1, q1)
+//!             'b' => (q2, q3)
+//!         }
+//!         recognizes {
+//!             "contains { bab }"
+//!         }
+//!     };
 //!
-//! let path = "abaababa".chars()
-//!     .map(|c| dfa.get_next(&c))
-//!     .collect::<Vec<_>>();
+//!     let path = "abaababa".chars()
+//!         .map(|c| dfa.get_next(&c))
+//!         .collect::<Vec<_>>();
 //!
-//! dbg!(&path);
+//!     dbg!(&path);
+//! }
 //! ```
 //!
 //! ### Output
