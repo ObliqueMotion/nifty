@@ -1,10 +1,10 @@
 [package]
 name = "nifty"
-version = "0.2.4"
+version = "0.2.5"
 authors = ["ObliqueMotion <aeketn@gmail.com>"]
 edition = "2018"
 readme = "README.md"
-license-file = "LICENSE"
+license = "MIT"
 documentation = "https://docs.rs/nifty"
 description = "A library for generating Deterministic Finite State Automata (DFA)."
 repository = "https://github.com/ObliqueMotion/nifty"
