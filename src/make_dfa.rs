@@ -1,11 +1,46 @@
-use crate::dfa::DFABuilder;
-
+/// Creates a [DFA](dfa/struct.DFA.html) using the [DFABuilder](dfa/struct.DFABuilder.html).
+///
+/// 1. `make_dfa!` **must** take `states{...}` first.
+/// 2. `make_dfa!` **may** take any of `start{...}`, `accept{...}`, `dead{...}`, `goal{...}` in any order.
+/// 3. `make_dfa!` **may** take any of `transitions{...}`, `recognizes{...}` in any order.
+/// ### Example
+///
+/// <img src="https://raw.githubusercontent.com/ObliqueMotion/nifty/master/images/example2.png">
+///
+/// ### Code
+///
+/// ```
+/// use nifty::make_dfa;
+///
+/// let q0 = "Seen { }";
+/// let q1 = "Seen { b }";
+/// let q2 = "Seen { ba }";
+/// let q3 = "Seen { bab }";
+///
+/// let mut dfa = make_dfa! {
+///     states { q0, q1, q2, q3 }
+///     start  { q0 }
+///     goal   { q3 }
+///     transitions {
+///         'a' => (q0, q0)
+///         'a' => (q1, q2)
+///         'a' => (q2, q0)
+///
+///         'b' => (q0, q1)
+///         'b' => (q1, q1)
+///         'b' => (q2, q3)
+///     }
+///     recognizes {
+///         "contains { bab }"
+///     }
+/// };
+/// ```
 #[macro_export]
-macro_rules! dfa {
+macro_rules! make_dfa {
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -19,11 +54,11 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
@@ -32,11 +67,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -50,11 +85,11 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
@@ -63,11 +98,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -81,11 +116,11 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
@@ -94,11 +129,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -112,11 +147,11 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
@@ -125,11 +160,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -143,11 +178,11 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
@@ -156,11 +191,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -174,11 +209,11 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
@@ -187,11 +222,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -205,11 +240,11 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
@@ -218,11 +253,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -236,11 +271,11 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
@@ -249,20 +284,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
-
-
-
-
-
-
-
-
-
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -276,11 +302,11 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
@@ -289,11 +315,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -307,11 +333,11 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
@@ -320,11 +346,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -338,11 +364,11 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
@@ -351,11 +377,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -369,11 +395,11 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
@@ -382,11 +408,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -400,11 +426,11 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
@@ -413,11 +439,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -431,11 +457,11 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
@@ -444,11 +470,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -462,11 +488,11 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
@@ -475,11 +501,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -493,11 +519,11 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
@@ -506,11 +532,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -524,11 +550,11 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
@@ -537,18 +563,17 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
-
+        ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
@@ -557,19 +582,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
-
-
-
-
-
-
-
-
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -583,11 +600,11 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
@@ -596,11 +613,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -614,11 +631,11 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
@@ -627,19 +644,17 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
-
-
+        ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
@@ -648,17 +663,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
-
-
-
-
-
-
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -672,11 +681,11 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
@@ -685,11 +694,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -703,11 +712,11 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
@@ -716,11 +725,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -734,11 +743,11 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
@@ -747,11 +756,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -765,11 +774,11 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
@@ -778,11 +787,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -796,11 +805,11 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
@@ -809,11 +818,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -824,11 +833,11 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
@@ -836,11 +845,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -851,11 +860,11 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
@@ -863,11 +872,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -878,11 +887,11 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
@@ -890,11 +899,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -905,11 +914,11 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
@@ -917,11 +926,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -932,11 +941,11 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
@@ -944,11 +953,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -959,11 +968,11 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
@@ -971,11 +980,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -986,11 +995,11 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
@@ -998,11 +1007,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -1013,11 +1022,11 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
@@ -1025,11 +1034,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -1040,11 +1049,11 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
@@ -1052,11 +1061,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -1067,11 +1076,11 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
@@ -1079,11 +1088,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -1094,11 +1103,11 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
@@ -1106,11 +1115,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -1121,11 +1130,11 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
@@ -1133,11 +1142,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -1148,11 +1157,11 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
@@ -1160,11 +1169,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -1175,11 +1184,11 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
@@ -1187,11 +1196,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -1202,11 +1211,11 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
@@ -1214,11 +1223,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -1229,11 +1238,11 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
@@ -1241,11 +1250,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -1256,11 +1265,11 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
@@ -1268,11 +1277,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -1283,11 +1292,11 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
@@ -1295,11 +1304,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -1310,11 +1319,11 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
@@ -1322,11 +1331,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -1337,11 +1346,11 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
@@ -1349,11 +1358,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -1364,11 +1373,11 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
@@ -1376,11 +1385,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -1391,11 +1400,11 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
@@ -1403,11 +1412,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -1418,11 +1427,11 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
@@ -1430,11 +1439,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -1445,11 +1454,11 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
@@ -1457,11 +1466,11 @@ macro_rules! dfa {
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -1469,22 +1478,22 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};               
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -1492,22 +1501,22 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -1515,22 +1524,22 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -1538,22 +1547,22 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -1561,22 +1570,22 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             $(.add_transition(&$from, &$edge, &$to))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -1584,11 +1593,11 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
@@ -1599,17 +1608,17 @@ macro_rules! dfa {
     (
         states {$(
             $state:expr
-            
-        ),*} 
+
+        ),*}
         dead{$(
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
@@ -1619,16 +1628,16 @@ macro_rules! dfa {
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.add_transition(&$from, &$edge, &$to))*
@@ -1638,16 +1647,16 @@ macro_rules! dfa {
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.add_transition(&$from, &$edge, &$to))*
@@ -1657,7 +1666,7 @@ macro_rules! dfa {
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -1672,7 +1681,7 @@ macro_rules! dfa {
         }
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
@@ -1680,11 +1689,11 @@ macro_rules! dfa {
             .mark_start_state(&$start)
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -1699,7 +1708,7 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
@@ -1707,11 +1716,11 @@ macro_rules! dfa {
             $(.mark_goal_state(&$goal))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -1726,7 +1735,7 @@ macro_rules! dfa {
         }
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
@@ -1734,11 +1743,11 @@ macro_rules! dfa {
             .mark_start_state(&$start)
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -1753,7 +1762,7 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
@@ -1761,11 +1770,11 @@ macro_rules! dfa {
             $(.mark_dead_state(&$dead))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -1780,7 +1789,7 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
@@ -1788,11 +1797,11 @@ macro_rules! dfa {
             $(.mark_goal_state(&$goal))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -1807,7 +1816,7 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
@@ -1815,11 +1824,11 @@ macro_rules! dfa {
             $(.mark_dead_state(&$dead))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -1834,7 +1843,7 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
@@ -1842,11 +1851,11 @@ macro_rules! dfa {
             $(.mark_goal_state(&$goal))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -1861,7 +1870,7 @@ macro_rules! dfa {
         }
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
@@ -1869,20 +1878,11 @@ macro_rules! dfa {
             .mark_start_state(&$start)
             .recognizes($description)
             .build()
-    }};       
-
-
-
-
-
-
-
-
-
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -1897,7 +1897,7 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
@@ -1905,11 +1905,11 @@ macro_rules! dfa {
             $(.mark_accept_state(&$accept))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -1924,7 +1924,7 @@ macro_rules! dfa {
         }
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
@@ -1932,11 +1932,11 @@ macro_rules! dfa {
             .mark_start_state(&$start)
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -1951,7 +1951,7 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
@@ -1959,11 +1959,11 @@ macro_rules! dfa {
             $(.mark_accept_state(&$accept))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -1978,7 +1978,7 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
@@ -1986,11 +1986,11 @@ macro_rules! dfa {
             $(.mark_goal_state(&$goal))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -2005,7 +2005,7 @@ macro_rules! dfa {
         }
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
@@ -2013,11 +2013,11 @@ macro_rules! dfa {
             .mark_start_state(&$start)
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -2032,7 +2032,7 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
@@ -2040,11 +2040,11 @@ macro_rules! dfa {
             $(.mark_dead_state(&$dead))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -2059,7 +2059,7 @@ macro_rules! dfa {
         }
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
@@ -2067,11 +2067,11 @@ macro_rules! dfa {
             .mark_start_state(&$start)
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -2086,7 +2086,7 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
@@ -2094,11 +2094,11 @@ macro_rules! dfa {
             $(.mark_accept_state(&$accept))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -2113,7 +2113,7 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
@@ -2121,15 +2121,14 @@ macro_rules! dfa {
             $(.mark_dead_state(&$dead))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
-
+        ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
@@ -2137,19 +2136,11 @@ macro_rules! dfa {
             $(.mark_dead_state(&$dead))*
             .recognizes($description)
             .build()
-    }};       
-
-
-
-
-
-
-
-
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -2164,7 +2155,7 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
@@ -2172,11 +2163,11 @@ macro_rules! dfa {
             $(.mark_accept_state(&$accept))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -2191,7 +2182,7 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
@@ -2199,16 +2190,14 @@ macro_rules! dfa {
             $(.mark_dead_state(&$dead))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
-
-
+        ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
@@ -2216,17 +2205,11 @@ macro_rules! dfa {
             $(.mark_dead_state(&$dead))*
             .recognizes($description)
             .build()
-    }};       
-
-
-
-
-
-
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -2241,7 +2224,7 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
@@ -2249,11 +2232,11 @@ macro_rules! dfa {
             $(.mark_goal_state(&$goal))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -2268,7 +2251,7 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
@@ -2276,11 +2259,11 @@ macro_rules! dfa {
             $(.mark_accept_state(&$accept))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -2295,7 +2278,7 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
@@ -2303,11 +2286,11 @@ macro_rules! dfa {
             $(.mark_goal_state(&$goal))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -2322,7 +2305,7 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
@@ -2330,11 +2313,11 @@ macro_rules! dfa {
             $(.mark_accept_state(&$accept))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -2349,7 +2332,7 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
@@ -2357,11 +2340,11 @@ macro_rules! dfa {
             $(.mark_dead_state(&$dead))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -2373,18 +2356,18 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -2396,18 +2379,18 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -2419,18 +2402,18 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -2442,18 +2425,18 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -2465,18 +2448,18 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -2488,18 +2471,18 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -2511,18 +2494,18 @@ macro_rules! dfa {
         }
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -2534,18 +2517,18 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -2557,18 +2540,18 @@ macro_rules! dfa {
         }
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -2580,18 +2563,18 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -2603,18 +2586,18 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -2626,18 +2609,18 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -2649,18 +2632,18 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -2672,18 +2655,18 @@ macro_rules! dfa {
         }
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -2695,18 +2678,18 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -2718,18 +2701,18 @@ macro_rules! dfa {
         }
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -2741,18 +2724,18 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -2764,18 +2747,18 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -2787,18 +2770,18 @@ macro_rules! dfa {
         }
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -2810,18 +2793,18 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -2833,18 +2816,18 @@ macro_rules! dfa {
         }
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -2856,18 +2839,18 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -2879,18 +2862,18 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -2902,18 +2885,18 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -2922,17 +2905,17 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             .recognizes($description)
             .build()
-    }};               
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -2941,17 +2924,17 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -2960,17 +2943,17 @@ macro_rules! dfa {
         }
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -2979,17 +2962,17 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -2998,17 +2981,17 @@ macro_rules! dfa {
         }
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             .recognizes($description)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -3017,7 +3000,7 @@ macro_rules! dfa {
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
@@ -3027,14 +3010,14 @@ macro_rules! dfa {
     (
         states {$(
             $state:expr
-            
-        ),*} 
+
+        ),*}
         dead{$(
             $dead:expr
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .recognizes($description)
@@ -3043,13 +3026,13 @@ macro_rules! dfa {
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             .recognizes($description)
@@ -3058,13 +3041,13 @@ macro_rules! dfa {
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
         recognizes { $description:expr }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .recognizes($description)
@@ -3073,7 +3056,7 @@ macro_rules! dfa {
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -3087,10 +3070,10 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
@@ -3098,11 +3081,11 @@ macro_rules! dfa {
             .mark_start_state(&$start)
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -3116,10 +3099,10 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
@@ -3127,11 +3110,11 @@ macro_rules! dfa {
             $(.mark_goal_state(&$goal))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -3145,10 +3128,10 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
@@ -3156,11 +3139,11 @@ macro_rules! dfa {
             .mark_start_state(&$start)
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -3174,10 +3157,10 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
@@ -3185,11 +3168,11 @@ macro_rules! dfa {
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -3203,10 +3186,10 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
@@ -3214,11 +3197,11 @@ macro_rules! dfa {
             $(.mark_goal_state(&$goal))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -3232,10 +3215,10 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
@@ -3243,11 +3226,11 @@ macro_rules! dfa {
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -3261,10 +3244,10 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
@@ -3272,11 +3255,11 @@ macro_rules! dfa {
             $(.mark_goal_state(&$goal))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -3290,10 +3273,10 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
@@ -3301,20 +3284,11 @@ macro_rules! dfa {
             .mark_start_state(&$start)
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
-
-
-
-
-
-
-
-
-
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -3328,10 +3302,10 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
@@ -3339,11 +3313,11 @@ macro_rules! dfa {
             $(.mark_accept_state(&$accept))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -3357,10 +3331,10 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
@@ -3368,11 +3342,11 @@ macro_rules! dfa {
             .mark_start_state(&$start)
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -3386,10 +3360,10 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
@@ -3397,11 +3371,11 @@ macro_rules! dfa {
             $(.mark_accept_state(&$accept))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -3415,10 +3389,10 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
@@ -3426,11 +3400,11 @@ macro_rules! dfa {
             $(.mark_goal_state(&$goal))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -3444,10 +3418,10 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
@@ -3455,11 +3429,11 @@ macro_rules! dfa {
             .mark_start_state(&$start)
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -3473,10 +3447,10 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
@@ -3484,11 +3458,11 @@ macro_rules! dfa {
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -3502,10 +3476,10 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
@@ -3513,11 +3487,11 @@ macro_rules! dfa {
             .mark_start_state(&$start)
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -3531,10 +3505,10 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
@@ -3542,11 +3516,11 @@ macro_rules! dfa {
             $(.mark_accept_state(&$accept))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -3560,10 +3534,10 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
@@ -3571,17 +3545,16 @@ macro_rules! dfa {
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
-
+        ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
@@ -3589,19 +3562,11 @@ macro_rules! dfa {
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
-
-
-
-
-
-
-
-
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -3615,10 +3580,10 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
@@ -3626,11 +3591,11 @@ macro_rules! dfa {
             $(.mark_accept_state(&$accept))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -3644,10 +3609,10 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
@@ -3655,18 +3620,16 @@ macro_rules! dfa {
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
-
-
+        ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
@@ -3674,17 +3637,11 @@ macro_rules! dfa {
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
-
-
-
-
-
-
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -3698,10 +3655,10 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
@@ -3709,11 +3666,11 @@ macro_rules! dfa {
             $(.mark_goal_state(&$goal))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -3727,10 +3684,10 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
@@ -3738,11 +3695,11 @@ macro_rules! dfa {
             $(.mark_accept_state(&$accept))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -3756,10 +3713,10 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
@@ -3767,11 +3724,11 @@ macro_rules! dfa {
             $(.mark_goal_state(&$goal))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -3785,10 +3742,10 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
@@ -3796,11 +3753,11 @@ macro_rules! dfa {
             $(.mark_accept_state(&$accept))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -3814,10 +3771,10 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
@@ -3825,11 +3782,11 @@ macro_rules! dfa {
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -3840,21 +3797,21 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -3865,21 +3822,21 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -3890,21 +3847,21 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -3915,21 +3872,21 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -3940,21 +3897,21 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -3965,21 +3922,21 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -3990,21 +3947,21 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -4015,21 +3972,21 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -4040,21 +3997,21 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -4065,21 +4022,21 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -4090,21 +4047,21 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -4115,21 +4072,21 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -4140,21 +4097,21 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -4165,21 +4122,21 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -4190,21 +4147,21 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -4215,21 +4172,21 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -4240,21 +4197,21 @@ macro_rules! dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -4265,21 +4222,21 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -4290,21 +4247,21 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -4315,21 +4272,21 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -4340,21 +4297,21 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -4365,21 +4322,21 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -4390,21 +4347,21 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -4415,21 +4372,21 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -4437,20 +4394,20 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};               
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -4458,20 +4415,20 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -4479,20 +4436,20 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -4500,20 +4457,20 @@ macro_rules! dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -4521,20 +4478,20 @@ macro_rules! dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -4542,10 +4499,10 @@ macro_rules! dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
@@ -4555,16 +4512,16 @@ macro_rules! dfa {
     (
         states {$(
             $state:expr
-            
-        ),*} 
+
+        ),*}
         dead{$(
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.add_transition(&$from, &$edge, &$to))*
@@ -4573,15 +4530,15 @@ macro_rules! dfa {
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.add_transition(&$from, &$edge, &$to))*
@@ -4590,15 +4547,15 @@ macro_rules! dfa {
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr),
+            $edge:expr => ($from:expr, $to:expr)
         )*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.add_transition(&$from, &$edge, &$to))*
@@ -4607,7 +4564,7 @@ macro_rules! dfa {
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -4621,18 +4578,18 @@ macro_rules! dfa {
             $start:expr
         }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -4646,18 +4603,18 @@ macro_rules! dfa {
             $goal:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -4671,18 +4628,18 @@ macro_rules! dfa {
             $start:expr
         }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -4696,18 +4653,18 @@ macro_rules! dfa {
             $dead:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -4721,18 +4678,18 @@ macro_rules! dfa {
             $goal:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -4746,18 +4703,18 @@ macro_rules! dfa {
             $dead:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -4771,18 +4728,18 @@ macro_rules! dfa {
             $goal:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -4796,27 +4753,18 @@ macro_rules! dfa {
             $start:expr
         }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             .build()
-    }};       
-
-
-
-
-
-
-
-
-
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -4830,18 +4778,18 @@ macro_rules! dfa {
             $accept:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -4855,18 +4803,18 @@ macro_rules! dfa {
             $start:expr
         }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -4880,18 +4828,18 @@ macro_rules! dfa {
             $accept:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -4905,18 +4853,18 @@ macro_rules! dfa {
             $goal:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -4930,18 +4878,18 @@ macro_rules! dfa {
             $start:expr
         }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -4955,18 +4903,18 @@ macro_rules! dfa {
             $dead:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -4980,18 +4928,18 @@ macro_rules! dfa {
             $start:expr
         }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -5005,18 +4953,18 @@ macro_rules! dfa {
             $accept:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -5030,40 +4978,31 @@ macro_rules! dfa {
             $dead:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
-
+        ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             .build()
-    }};       
-
-
-
-
-
-
-
-
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -5077,18 +5016,18 @@ macro_rules! dfa {
             $accept:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -5102,39 +5041,31 @@ macro_rules! dfa {
             $dead:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
-
-
+        ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             .build()
-    }};       
-
-
-
-
-
-
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -5148,18 +5079,18 @@ macro_rules! dfa {
             $goal:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -5173,18 +5104,18 @@ macro_rules! dfa {
             $accept:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -5198,18 +5129,18 @@ macro_rules! dfa {
             $goal:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -5223,18 +5154,18 @@ macro_rules! dfa {
             $accept:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -5248,18 +5179,18 @@ macro_rules! dfa {
             $dead:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -5270,17 +5201,17 @@ macro_rules! dfa {
             $goal:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -5291,17 +5222,17 @@ macro_rules! dfa {
             $dead:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -5312,17 +5243,17 @@ macro_rules! dfa {
             $goal:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -5333,17 +5264,17 @@ macro_rules! dfa {
             $accept:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -5354,17 +5285,17 @@ macro_rules! dfa {
             $dead:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -5375,17 +5306,17 @@ macro_rules! dfa {
             $accept:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -5396,17 +5327,17 @@ macro_rules! dfa {
             $start:expr
         }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -5417,17 +5348,17 @@ macro_rules! dfa {
             $dead:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -5438,17 +5369,17 @@ macro_rules! dfa {
             $start:expr
         }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -5459,17 +5390,17 @@ macro_rules! dfa {
             $accept:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -5480,17 +5411,17 @@ macro_rules! dfa {
             $dead:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             $(.mark_dead_state(&$dead))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -5501,17 +5432,17 @@ macro_rules! dfa {
             $accept:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             $(.mark_accept_state(&$accept))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -5522,17 +5453,17 @@ macro_rules! dfa {
             $goal:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -5543,17 +5474,17 @@ macro_rules! dfa {
             $start:expr
         }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -5564,17 +5495,17 @@ macro_rules! dfa {
             $accept:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -5585,17 +5516,17 @@ macro_rules! dfa {
             $start:expr
         }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
             .mark_start_state(&$start)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -5606,17 +5537,17 @@ macro_rules! dfa {
             $accept:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
             $(.mark_accept_state(&$accept))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -5627,17 +5558,17 @@ macro_rules! dfa {
             $goal:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_accept_state(&$accept))*
             $(.mark_goal_state(&$goal))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -5648,17 +5579,17 @@ macro_rules! dfa {
             $start:expr
         }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -5669,17 +5600,17 @@ macro_rules! dfa {
             $goal:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -5690,17 +5621,17 @@ macro_rules! dfa {
             $start:expr
         }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -5711,17 +5642,17 @@ macro_rules! dfa {
             $dead:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -5732,17 +5663,17 @@ macro_rules! dfa {
             $goal:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -5753,17 +5684,17 @@ macro_rules! dfa {
             $dead:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -5771,16 +5702,16 @@ macro_rules! dfa {
             $goal:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             $(.mark_goal_state(&$goal))*
             .build()
-    }};               
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -5788,16 +5719,16 @@ macro_rules! dfa {
             $dead:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             $(.mark_dead_state(&$dead))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         dead{$(
             $dead:expr
         ),*}
@@ -5805,16 +5736,16 @@ macro_rules! dfa {
             $start:expr
         }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .mark_start_state(&$start)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -5822,16 +5753,16 @@ macro_rules! dfa {
             $dead:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_dead_state(&$dead))*
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
@@ -5839,16 +5770,16 @@ macro_rules! dfa {
             $start:expr
         }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
             .mark_start_state(&$start)
             .build()
-    }};       
+    }};
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
@@ -5856,7 +5787,7 @@ macro_rules! dfa {
             $goal:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             $(.mark_goal_state(&$goal))*
@@ -5865,13 +5796,13 @@ macro_rules! dfa {
     (
         states {$(
             $state:expr
-            
-        ),*} 
+
+        ),*}
         dead{$(
             $dead:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_dead_state(&$dead))*
             .build()
@@ -5879,12 +5810,12 @@ macro_rules! dfa {
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         start {
             $start:expr
         }
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             .mark_start_state(&$start)
             .build()
@@ -5892,14 +5823,23 @@ macro_rules! dfa {
     (
         states {$(
             $state:expr
-        ),*} 
+        ),*}
         goal{$(
             $goal:expr
         ),*}
     ) => {{
-            DFABuilder::default()
+            $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
             .build()
     }};
 }

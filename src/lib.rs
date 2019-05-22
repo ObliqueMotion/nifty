@@ -23,30 +23,32 @@
 //! ### Code
 //!
 //! ```
-//! use nifty::dfa::DFABuilder;
+//! use nifty::make_dfa;
 //!
 //! let q0 = "q0";
 //! let q1 = "q1";
 //! let q2 = "q2";
 //! let q3 = "q3";
 //!
-//! let mut dfa = DFABuilder::default()
-//!     .add_state(&q0)
-//!     .add_state(&q1)
-//!     .add_state(&q2)
-//!     .add_state(&q3)
-//!     .mark_dead_state(&q3)
-//!     .mark_start_state(&q0)
-//!     .mark_accept_state(&q0)
-//!     .mark_accept_state(&q1)
-//!     .add_transition(&q0, &'a', &q1)
-//!     .add_transition(&q0, &'b', &q3)
-//!     .add_transition(&q1, &'a', &q1)
-//!     .add_transition(&q1, &'b', &q2)
-//!     .add_transition(&q2, &'a', &q1)
-//!     .add_transition(&q2, &'b', &q2)
-//!     .recognizes("string is empty, or begins and ends with the letter { a }.")
-//!     .build();
+//! let mut dfa = make_dfa! {
+//!     states { q0, q1, q2, q3 }
+//!     accept { q0, q1 }
+//!     start  { q0 }
+//!     dead   { q3 }
+//!     transitions {
+//!         'a' => (q0, q1)
+//!         'b' => (q0, q3)
+//!
+//!         'a' => (q1, q1)
+//!         'b' => (q1, q2)
+//!
+//!         'a' => (q2, q1)
+//!         'b' => (q2, q2)
+//!     }
+//!     recognizes {
+//!         "empty, or starts and ends with { a }"
+//!     }
+//! };
 //!
 //! dfa.evaluate("".chars());      //    Accept
 //! dfa.evaluate("a".chars());     //    Accept
@@ -67,28 +69,30 @@
 //! ### Code
 //!
 //! ```
-//! use nifty::dfa::DFABuilder;
+//! use nifty::make_dfa;
 //!
 //! let q0 = "Seen { }";
 //! let q1 = "Seen { b }";
 //! let q2 = "Seen { ba }";
 //! let q3 = "Seen { bab }";
 //!
-//! let mut dfa = DFABuilder::default()
-//!     .add_state(&q0)
-//!     .add_state(&q1)
-//!     .add_state(&q2)
-//!     .add_state(&q3)
-//!     .mark_goal_state(&q3)
-//!     .mark_start_state(&q0)
-//!     .add_transition(&q0, &'a', &q0)
-//!     .add_transition(&q1, &'a', &q2)
-//!     .add_transition(&q2, &'a', &q0)
-//!     .add_transition(&q0, &'b', &q1)
-//!     .add_transition(&q1, &'b', &q1)
-//!     .add_transition(&q2, &'b', &q3)
-//!     .recognizes("input contains { bab }")
-//!     .build();
+//! let mut dfa = make_dfa! {
+//!     states { q0, q1, q2, q3 }
+//!     start  { q0 }
+//!     goal   { q3 }
+//!     transitions {
+//!         'a' => (q0, q0)
+//!         'a' => (q1, q2)
+//!         'a' => (q2, q0)
+//!
+//!         'b' => (q0, q1)
+//!         'b' => (q1, q1)
+//!         'b' => (q2, q3)
+//!     }
+//!     recognizes {
+//!         "contains { bab }"
+//!     }
+//! };
 //!
 //! let path = "abaababa".chars()
 //!     .map(|c| dfa.get_next(&c))
@@ -113,4 +117,42 @@
 //! ```
 
 pub mod dfa;
-pub mod dfa_macro;
+/// Macro [make_dfa!](macro.make_dfa.html) creates a [DFA](dfa/struct.DFA.html) using the [DFABuilder](dfa/struct.DFABuilder.html).
+///
+/// 1. `make_dfa!` **must** take `states{...}` first.
+/// 2. `make_dfa!` **may** take any of `start{...}`, `accept{...}`, `dead{...}`, `goal{...}` in any order.
+/// 3. `make_dfa!` **may** take any of `transitions{...}`, `recognizes{...}` in any order.
+///
+/// ### Example
+///
+/// <img src="https://raw.githubusercontent.com/ObliqueMotion/nifty/master/images/example2.png">
+///
+/// ### Code
+///
+/// ```
+/// use nifty::make_dfa;
+///
+/// let q0 = "Seen { }";
+/// let q1 = "Seen { b }";
+/// let q2 = "Seen { ba }";
+/// let q3 = "Seen { bab }";
+///
+/// let mut dfa = make_dfa! {
+///     states { q0, q1, q2, q3 }
+///     start  { q0 }
+///     goal   { q3 }
+///     transitions {
+///         'a' => (q0, q0)
+///         'a' => (q1, q2)
+///         'a' => (q2, q0)
+///
+///         'b' => (q0, q1)
+///         'b' => (q1, q1)
+///         'b' => (q2, q3)
+///     }
+///     recognizes {
+///         "contains { bab }"
+///     }
+/// };
+/// ```
+pub mod make_dfa;
