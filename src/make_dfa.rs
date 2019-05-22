@@ -1680,6 +1680,1632 @@ macro_rules! make_dfa {
             $start:expr
         }
         recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_accept_state(&$accept))*
+            $(.mark_dead_state(&$dead))*
+            $(.mark_goal_state(&$goal))*
+            .mark_start_state(&$start)
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        goal{$(
+            $goal:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_accept_state(&$accept))*
+            $(.mark_dead_state(&$dead))*
+            .mark_start_state(&$start)
+            $(.mark_goal_state(&$goal))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_accept_state(&$accept))*
+            $(.mark_goal_state(&$goal))*
+            $(.mark_dead_state(&$dead))*
+            .mark_start_state(&$start)
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        dead{$(
+            $dead:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_accept_state(&$accept))*
+            $(.mark_goal_state(&$goal))*
+            .mark_start_state(&$start)
+            $(.mark_dead_state(&$dead))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        dead{$(
+            $dead:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_accept_state(&$accept))*
+            .mark_start_state(&$start)
+            $(.mark_dead_state(&$dead))*
+            $(.mark_goal_state(&$goal))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        goal{$(
+            $goal:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_accept_state(&$accept))*
+            .mark_start_state(&$start)
+            $(.mark_goal_state(&$goal))*
+            $(.mark_dead_state(&$dead))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        goal{$(
+            $goal:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_dead_state(&$dead))*
+            $(.mark_accept_state(&$accept))*
+            .mark_start_state(&$start)
+            $(.mark_goal_state(&$goal))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_dead_state(&$dead))*
+            $(.mark_accept_state(&$accept))*
+            $(.mark_goal_state(&$goal))*
+            .mark_start_state(&$start)
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        accept {$(
+            $accept:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_dead_state(&$dead))*
+            $(.mark_goal_state(&$goal))*
+            .mark_start_state(&$start)
+            $(.mark_accept_state(&$accept))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_dead_state(&$dead))*
+            $(.mark_goal_state(&$goal))*
+            $(.mark_accept_state(&$accept))*
+            .mark_start_state(&$start)
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        goal{$(
+            $goal:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_dead_state(&$dead))*
+            .mark_start_state(&$start)
+            $(.mark_goal_state(&$goal))*
+            $(.mark_accept_state(&$accept))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        accept {$(
+            $accept:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_dead_state(&$dead))*
+            .mark_start_state(&$start)
+            $(.mark_accept_state(&$accept))*
+            $(.mark_goal_state(&$goal))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_goal_state(&$goal))*
+            $(.mark_accept_state(&$accept))*
+            $(.mark_dead_state(&$dead))*
+            .mark_start_state(&$start)
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        dead{$(
+            $dead:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_goal_state(&$goal))*
+            $(.mark_accept_state(&$accept))*
+            .mark_start_state(&$start)
+            $(.mark_dead_state(&$dead))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_goal_state(&$goal))*
+            $(.mark_dead_state(&$dead))*
+            $(.mark_accept_state(&$accept))*
+            .mark_start_state(&$start)
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        accept {$(
+            $accept:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_goal_state(&$goal))*
+            $(.mark_dead_state(&$dead))*
+            .mark_start_state(&$start)
+            $(.mark_accept_state(&$accept))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        accept {$(
+            $accept:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_goal_state(&$goal))*
+            .mark_start_state(&$start)
+            $(.mark_accept_state(&$accept))*
+            $(.mark_dead_state(&$dead))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            .mark_start_state(&$start)
+            $(.mark_accept_state(&$accept))*
+            $(.mark_goal_state(&$goal))*
+            $(.mark_dead_state(&$dead))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        dead{$(
+            $dead:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_goal_state(&$goal))*
+            .mark_start_state(&$start)
+            $(.mark_dead_state(&$dead))*
+            $(.mark_accept_state(&$accept))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        accept {$(
+            $accept:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            .mark_start_state(&$start)
+            $(.mark_accept_state(&$accept))*
+            $(.mark_goal_state(&$goal))*
+            $(.mark_dead_state(&$dead))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            .mark_start_state(&$start)
+            $(.mark_accept_state(&$accept))*
+            $(.mark_goal_state(&$goal))*
+            $(.mark_dead_state(&$dead))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        accept {$(
+            $accept:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            .mark_start_state(&$start)
+            $(.mark_accept_state(&$accept))*
+            $(.mark_dead_state(&$dead))*
+            $(.mark_goal_state(&$goal))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        dead{$(
+            $dead:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            .mark_start_state(&$start)
+            $(.mark_dead_state(&$dead))*
+            $(.mark_goal_state(&$goal))*
+            $(.mark_accept_state(&$accept))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        dead{$(
+            $dead:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            .mark_start_state(&$start)
+            $(.mark_dead_state(&$dead))*
+            $(.mark_accept_state(&$accept))*
+            $(.mark_goal_state(&$goal))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        goal{$(
+            $goal:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            .mark_start_state(&$start)
+            $(.mark_goal_state(&$goal))*
+            $(.mark_dead_state(&$dead))*
+            $(.mark_accept_state(&$accept))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        goal{$(
+            $goal:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            .mark_start_state(&$start)
+            $(.mark_goal_state(&$goal))*
+            $(.mark_accept_state(&$accept))*
+            $(.mark_dead_state(&$dead))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_accept_state(&$accept))*
+            $(.mark_dead_state(&$dead))*
+            $(.mark_goal_state(&$goal))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_accept_state(&$accept))*
+            $(.mark_goal_state(&$goal))*
+            $(.mark_dead_state(&$dead))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_dead_state(&$dead))*
+            $(.mark_accept_state(&$accept))*
+            $(.mark_goal_state(&$goal))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_dead_state(&$dead))*
+            $(.mark_goal_state(&$goal))*
+            $(.mark_accept_state(&$accept))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_goal_state(&$goal))*
+            $(.mark_accept_state(&$accept))*
+            $(.mark_dead_state(&$dead))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_goal_state(&$goal))*
+            $(.mark_dead_state(&$dead))*
+            $(.mark_accept_state(&$accept))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_accept_state(&$accept))*
+            $(.mark_dead_state(&$dead))*
+            .mark_start_state(&$start)
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        dead{$(
+            $dead:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_accept_state(&$accept))*
+            .mark_start_state(&$start)
+            $(.mark_dead_state(&$dead))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_dead_state(&$dead))*
+            $(.mark_accept_state(&$accept))*
+            .mark_start_state(&$start)
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        accept {$(
+            $accept:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_dead_state(&$dead))*
+            .mark_start_state(&$start)
+            $(.mark_accept_state(&$accept))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        accept {$(
+            $accept:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            .mark_start_state(&$start)
+            $(.mark_accept_state(&$accept))*
+            $(.mark_dead_state(&$dead))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        dead{$(
+            $dead:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            .mark_start_state(&$start)
+            $(.mark_dead_state(&$dead))*
+            $(.mark_accept_state(&$accept))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        goal{$(
+            $goal:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_accept_state(&$accept))*
+            .mark_start_state(&$start)
+            $(.mark_goal_state(&$goal))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_accept_state(&$accept))*
+            $(.mark_goal_state(&$goal))*
+            .mark_start_state(&$start)
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        accept {$(
+            $accept:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_goal_state(&$goal))*
+            .mark_start_state(&$start)
+            $(.mark_accept_state(&$accept))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_goal_state(&$goal))*
+            $(.mark_accept_state(&$accept))*
+            .mark_start_state(&$start)
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        goal{$(
+            $goal:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            .mark_start_state(&$start)
+            $(.mark_goal_state(&$goal))*
+            $(.mark_accept_state(&$accept))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        accept {$(
+            $accept:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            .mark_start_state(&$start)
+            $(.mark_accept_state(&$accept))*
+            $(.mark_goal_state(&$goal))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_dead_state(&$dead))*
+            $(.mark_goal_state(&$goal))*
+            .mark_start_state(&$start)
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        goal{$(
+            $goal:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_dead_state(&$dead))*
+            .mark_start_state(&$start)
+            $(.mark_goal_state(&$goal))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_goal_state(&$goal))*
+            $(.mark_dead_state(&$dead))*
+            .mark_start_state(&$start)
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        dead{$(
+            $dead:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_goal_state(&$goal))*
+            .mark_start_state(&$start)
+            $(.mark_dead_state(&$dead))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        dead{$(
+            $dead:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            .mark_start_state(&$start)
+            $(.mark_dead_state(&$dead))*
+            $(.mark_goal_state(&$goal))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        goal{$(
+            $goal:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            .mark_start_state(&$start)
+            $(.mark_goal_state(&$goal))*
+            $(.mark_dead_state(&$dead))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_dead_state(&$dead))*
+            $(.mark_goal_state(&$goal))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_goal_state(&$goal))*
+            $(.mark_dead_state(&$dead))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_dead_state(&$dead))*
+            .mark_start_state(&$start)
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        dead{$(
+            $dead:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            .mark_start_state(&$start)
+            $(.mark_dead_state(&$dead))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_goal_state(&$goal))*
+            .mark_start_state(&$start)
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        goal{$(
+            $goal:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            .mark_start_state(&$start)
+            $(.mark_goal_state(&$goal))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_dead_state(&$dead))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            .mark_start_state(&$start)
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.mark_goal_state(&$goal))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        accept {$(
+            $accept:expr
+        ),*}
+        dead{$(
+            $dead:expr
+        ),*}
+        goal{$(
+            $goal:expr
+        ),*}
+        start {
+            $start:expr
+        }
+        recognizes { $description:expr }
     ) => {{
             $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
