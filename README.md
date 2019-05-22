@@ -48,45 +48,48 @@ fn main() {
 
 **Output**
 ```
-[src/main.rs:26] &dfa = DFA {
+[src/lib.rs:82] &dfa = DFA {
+    recognizes: "string is empty, or begins and ends with the letter \'a\'.",
     states: {
         "q0",
         "q1",
         "q2",
-        "q3"
+        "q3",
     },
     accept_states: {
         "q0",
-        "q1"
+        "q1",
     },
     dead_states: {
-        "q3"
+        "q3",
     },
     goal_states: {},
     transitions: {
         'a': {
             "q0": "q1",
             "q1": "q1",
-            "q2": "q1"
+            "q2": "q1",
         },
         'b': {
             "q0": "q3",
             "q1": "q2",
-            "q2": "q2"
-        }
+            "q2": "q2",
+        },
     },
     start: Some(
-        "q0"
+        "q0",
     ),
-    current: "q0"
+    current: "q0",
 }
-[src/main.rs:28] dfa.recognize("".chars()) = Accept
-[src/main.rs:29] dfa.recognize("a".chars()) = Accept
-[src/main.rs:30] dfa.recognize("b".chars()) = Reject
-[src/main.rs:31] dfa.recognize("aa".chars()) = Accept
-[src/main.rs:32] dfa.recognize("ab".chars()) = Reject
-[src/main.rs:33] dfa.recognize("abb".chars()) = Reject
-[src/main.rs:34] dfa.recognize("aba".chars()) = Accept
-[src/main.rs:35] dfa.recognize("abba".chars()) = Accept
-[src/main.rs:36] dfa.recognize("babba".chars()) = Reject
+
+
+[src/main.rs:28] dfa.evaluate("".chars()) = Accept
+[src/main.rs:29] dfa.evaluate("a".chars()) = Accept
+[src/main.rs:30] dfa.evaluate("b".chars()) = Reject
+[src/main.rs:31] dfa.evaluate("aa".chars()) = Accept
+[src/main.rs:32] dfa.evaluate("ab".chars()) = Reject
+[src/main.rs:33] dfa.evaluate("abb".chars()) = Reject
+[src/main.rs:34] dfa.evaluate("aba".chars()) = Accept
+[src/main.rs:35] dfa.evaluate("abba".chars()) = Accept
+[src/main.rs:36] dfa.evaluate("babba".chars()) = Reject
 ```
