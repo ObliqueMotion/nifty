@@ -66,7 +66,7 @@ fn main() {
 **Output**
 ```
 [src/lib.rs:82] &dfa = DFA {
-    recognizes: "string is empty, or begins and ends with the letter { a }.",
+    recognizes: "empty, or starts and ends with { a }",
     states: {
         "q0",
         "q1",
