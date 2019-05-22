@@ -15,11 +15,11 @@ Both methods ensure that the DFA has valid transitions for every symbol in its a
 
 ## Examples
 
-### Using the DFABuilder
+### Building a DFA
 
 ![example](images/example.png)
 
-**Code Represntation**
+**Code**
 ```rust
 use nifty::make_dfa;
 
