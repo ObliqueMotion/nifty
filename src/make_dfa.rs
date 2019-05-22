@@ -1667,6 +1667,21 @@ macro_rules! make_dfa {
         states {$(
             $state:expr
         ),*}
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+        recognizes { $description:expr }
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -3293,6 +3308,21 @@ macro_rules! make_dfa {
         states {$(
             $state:expr
         ),*}
+        recognizes { $description:expr }
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -4683,6 +4713,17 @@ macro_rules! make_dfa {
         states {$(
             $state:expr
         ),*}
+        recognizes { $description:expr }
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
+            .recognizes($description)
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
         accept {$(
             $accept:expr
         ),*}
@@ -6184,6 +6225,19 @@ macro_rules! make_dfa {
             $crate::dfa::DFABuilder::default()
             $(.add_state(&$state))*
             $(.mark_goal_state(&$goal))*
+            $(.add_transition(&$from, &$edge, &$to))*
+            .build()
+    }};
+    (
+        states {$(
+            $state:expr
+        ),*}
+        transitions {$(
+            $edge:expr => ($from:expr, $to:expr)
+        )*}
+    ) => {{
+            $crate::dfa::DFABuilder::default()
+            $(.add_state(&$state))*
             $(.add_transition(&$from, &$edge, &$to))*
             .build()
     }};
