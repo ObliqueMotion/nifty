@@ -38,14 +38,14 @@
 //!     start  { q0 }
 //!     dead   { q3 }
 //!     transitions {
-//!         'a' => (q0, q1)
-//!         'b' => (q0, q3)
+//!         d(q0, 'a') = q1
+//!         d(q0, 'b') = q3
 //!
-//!         'a' => (q1, q1)
-//!         'b' => (q1, q2)
+//!         d(q1, 'a') = q1
+//!         d(q1, 'b') = q2
 //!
-//!         'a' => (q2, q1)
-//!         'b' => (q2, q2)
+//!         d(q2, 'a') = q1
+//!         d(q2, 'b') = q2
 //!     }
 //!     recognizes {
 //!         "empty, or starts and ends with { a }"
@@ -84,13 +84,13 @@
 //!         start  { q0 }
 //!         goal   { q3 }
 //!         transitions {
-//!             'a' => (q0, q0)
-//!             'a' => (q1, q2)
-//!             'a' => (q2, q0)
+//!             d(q0, 'a') = q0
+//!             d(q1, 'a') = q2
+//!             d(q2, 'a') = q0
 //!
-//!             'b' => (q0, q1)
-//!             'b' => (q1, q1)
-//!             'b' => (q2, q3)
+//!             d(q0, 'b') = q1
+//!             d(q1, 'b') = q1
+//!             d(q2, 'b') = q3
 //!         }
 //!         recognizes {
 //!             "contains { bab }"
@@ -146,13 +146,13 @@ pub mod dfa;
 ///     start  { q0 }
 ///     goal   { q3 }
 ///     transitions {
-///         'a' => (q0, q0)
-///         'a' => (q1, q2)
-///         'a' => (q2, q0)
+///         d(q0, 'a') = q0
+///         d(q1, 'a') = q2
+///         d(q2, 'a') = q0
 ///
-///         'b' => (q0, q1)
-///         'b' => (q1, q1)
-///         'b' => (q2, q3)
+///         d(q0, 'b') = q1
+///         d(q1, 'b') = q1
+///         d(q2, 'b') = q3
 ///     }
 ///     recognizes {
 ///         "contains { bab }"
