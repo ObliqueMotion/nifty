@@ -35,7 +35,7 @@
 //!     .add_transition(&q1, &'b', &q2)
 //!     .add_transition(&q2, &'a', &q1)
 //!     .add_transition(&q2, &'b', &q2)
-//!     .recognizes("string is empty, or begins and ends with the letter 'a'.")
+//!     .recognizes("string is empty, or begins and ends with the letter { a }.")
 //!     .build();
 //! 
 //! dfa.evaluate("".chars());      //    Accept

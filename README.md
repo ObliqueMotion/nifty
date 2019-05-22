@@ -30,6 +30,7 @@ fn main() {
         .add_transition(&q1, &'b', &q2)
         .add_transition(&q2, &'a', &q1)
         .add_transition(&q2, &'b', &q2)
+        .recognizes("string is empty, or begins and ends with the letter { a }.")
         .build();
 
     dbg!(&dfa);
@@ -49,7 +50,7 @@ fn main() {
 **Output**
 ```
 [src/lib.rs:82] &dfa = DFA {
-    recognizes: "string is empty, or begins and ends with the letter \'a\'.",
+    recognizes: "string is empty, or begins and ends with the letter { a }.",
     states: {
         "q0",
         "q1",
