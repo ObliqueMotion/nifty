@@ -1,4 +1,4 @@
-# dfa-gen
+# nifty
 A Generic Deterministic Finite-State Automaton Generator Written in Rust
 
 ## Example
@@ -7,7 +7,7 @@ A Generic Deterministic Finite-State Automaton Generator Written in Rust
 
 **Code Represntation**
 ```rust
-use dfagen::DFABuilder;
+use nifty::DFABuilder;
 
 fn main() {
     let q0 = "q0";
