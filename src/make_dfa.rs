@@ -22,13 +22,13 @@
 ///     start  { q0 }
 ///     goal   { q3 }
 ///     transitions {
-///         'a' => (q0, q0)
-///         'a' => (q1, q2)
-///         'a' => (q2, q0)
+///         d(q0, 'a') = q0
+///         d(q1, 'a') = q2
+///         d(q2, 'a') = q0
 ///
-///         'b' => (q0, q1)
-///         'b' => (q1, q1)
-///         'b' => (q2, q3)
+///         d(q0, 'b') = q1
+///         d(q1, 'b') = q1
+///         d(q2, 'b') = q3
 ///     }
 ///     recognizes {
 ///         "contains { bab }"
@@ -54,7 +54,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -85,7 +85,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -116,7 +116,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -147,7 +147,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -178,7 +178,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -209,7 +209,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -240,7 +240,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -271,7 +271,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -302,7 +302,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -333,7 +333,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -364,7 +364,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -395,7 +395,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -426,7 +426,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -457,7 +457,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -488,7 +488,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -519,7 +519,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -550,7 +550,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -581,7 +581,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -612,7 +612,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -643,7 +643,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -674,7 +674,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -705,7 +705,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -736,7 +736,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -767,7 +767,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -795,7 +795,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -822,7 +822,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -849,7 +849,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -876,7 +876,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -903,7 +903,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -930,7 +930,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -957,7 +957,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -984,7 +984,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1011,7 +1011,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1038,7 +1038,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1065,7 +1065,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1092,7 +1092,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1119,7 +1119,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1146,7 +1146,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1173,7 +1173,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1200,7 +1200,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1227,7 +1227,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1254,7 +1254,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1281,7 +1281,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1308,7 +1308,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1335,7 +1335,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1362,7 +1362,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1389,7 +1389,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1416,7 +1416,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1440,7 +1440,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1463,7 +1463,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1486,7 +1486,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1509,7 +1509,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1532,7 +1532,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1555,7 +1555,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1578,7 +1578,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1601,7 +1601,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1624,7 +1624,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1647,7 +1647,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1670,7 +1670,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1693,7 +1693,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1713,7 +1713,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1732,7 +1732,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1751,7 +1751,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1770,7 +1770,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1786,7 +1786,7 @@ macro_rules! make_dfa {
             $state:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
         recognizes { $description:expr }
     ) => {{
@@ -1814,7 +1814,7 @@ macro_rules! make_dfa {
         }
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -1845,7 +1845,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -1876,7 +1876,7 @@ macro_rules! make_dfa {
         }
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -1907,7 +1907,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -1938,7 +1938,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -1969,7 +1969,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2000,7 +2000,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2031,7 +2031,7 @@ macro_rules! make_dfa {
         }
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2062,7 +2062,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2093,7 +2093,7 @@ macro_rules! make_dfa {
         }
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2124,7 +2124,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2155,7 +2155,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2186,7 +2186,7 @@ macro_rules! make_dfa {
         }
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2217,7 +2217,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2248,7 +2248,7 @@ macro_rules! make_dfa {
         }
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2279,7 +2279,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2310,7 +2310,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2341,7 +2341,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2372,7 +2372,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2403,7 +2403,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2434,7 +2434,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2465,7 +2465,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2496,7 +2496,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2527,7 +2527,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2555,7 +2555,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2582,7 +2582,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2609,7 +2609,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2636,7 +2636,7 @@ macro_rules! make_dfa {
         }
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2663,7 +2663,7 @@ macro_rules! make_dfa {
         }
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2690,7 +2690,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2717,7 +2717,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2744,7 +2744,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2771,7 +2771,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2798,7 +2798,7 @@ macro_rules! make_dfa {
         }
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2825,7 +2825,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2852,7 +2852,7 @@ macro_rules! make_dfa {
         }
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2879,7 +2879,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2906,7 +2906,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2933,7 +2933,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2960,7 +2960,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -2987,7 +2987,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3014,7 +3014,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3041,7 +3041,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3068,7 +3068,7 @@ macro_rules! make_dfa {
         }
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3095,7 +3095,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3122,7 +3122,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3149,7 +3149,7 @@ macro_rules! make_dfa {
         }
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3176,7 +3176,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3200,7 +3200,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3223,7 +3223,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3246,7 +3246,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3269,7 +3269,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3292,7 +3292,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3315,7 +3315,7 @@ macro_rules! make_dfa {
         }
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3338,7 +3338,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3361,7 +3361,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3384,7 +3384,7 @@ macro_rules! make_dfa {
         }
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3407,7 +3407,7 @@ macro_rules! make_dfa {
         }
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3430,7 +3430,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3453,7 +3453,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3473,7 +3473,7 @@ macro_rules! make_dfa {
         }
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3492,7 +3492,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3511,7 +3511,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3530,7 +3530,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3546,7 +3546,7 @@ macro_rules! make_dfa {
         ),*}
         recognizes { $description:expr }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3572,7 +3572,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3601,7 +3601,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3630,7 +3630,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3659,7 +3659,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3688,7 +3688,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3717,7 +3717,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3746,7 +3746,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3775,7 +3775,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3804,7 +3804,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3833,7 +3833,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3862,7 +3862,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3891,7 +3891,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3920,7 +3920,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3949,7 +3949,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -3978,7 +3978,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4007,7 +4007,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4036,7 +4036,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4065,7 +4065,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4094,7 +4094,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4123,7 +4123,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4152,7 +4152,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4181,7 +4181,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4210,7 +4210,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4239,7 +4239,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4265,7 +4265,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4290,7 +4290,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4315,7 +4315,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4340,7 +4340,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4365,7 +4365,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4390,7 +4390,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4415,7 +4415,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4440,7 +4440,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4465,7 +4465,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4490,7 +4490,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4515,7 +4515,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4540,7 +4540,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4565,7 +4565,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4590,7 +4590,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4615,7 +4615,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4640,7 +4640,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4665,7 +4665,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4690,7 +4690,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4715,7 +4715,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4740,7 +4740,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4765,7 +4765,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4790,7 +4790,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4815,7 +4815,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4840,7 +4840,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4862,7 +4862,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4883,7 +4883,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4904,7 +4904,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4925,7 +4925,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4946,7 +4946,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4967,7 +4967,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -4988,7 +4988,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -5009,7 +5009,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -5030,7 +5030,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -5051,7 +5051,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -5072,7 +5072,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -5093,7 +5093,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -5111,7 +5111,7 @@ macro_rules! make_dfa {
             $start:expr
         }
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -5128,7 +5128,7 @@ macro_rules! make_dfa {
             $goal:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -5145,7 +5145,7 @@ macro_rules! make_dfa {
             $dead:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -5162,7 +5162,7 @@ macro_rules! make_dfa {
             $accept:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
@@ -5176,7 +5176,7 @@ macro_rules! make_dfa {
             $state:expr
         ),*}
         transitions {$(
-            $edge:expr => ($from:expr, $to:expr)
+            d($from:expr, $edge:expr) = $to:expr
         )*}
     ) => {{
             $crate::dfa::DFABuilder::default()
