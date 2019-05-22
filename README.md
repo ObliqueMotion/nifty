@@ -10,7 +10,7 @@ It allows you to build a DFA with states of a generic type `S` that recognizes a
 whose symbols are of a generic type `T`. You can traverse each transition symbol one by one, or you can 
 consume an iterator of symbols, which the DFA will either `Accept` or `Reject`.
 
-DFAs are created using a DFABuilder, or by using the `make_dfa!` macro.
+DFAs are created using a `DFABuilder`, or by using the `make_dfa!` macro.
 Both methods ensure that the DFA has valid transitions for every symbol in its alphabet.
 
 ## Examples

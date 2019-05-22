@@ -8,16 +8,17 @@
 //! whose symbols are of a generic type `T`. You can traverse each transition symbol one by one, or you can
 //! consume an iterator of symbols, which the DFA will either `Accept` or `Reject`.
 //!
-//! DFAs are created using a DFABuilder, or by using the `make_dfa!` macro.
+//! DFAs are created using a `DFABuilder`, or by using the `make_dfa!` macro.
 //! Both methods ensure that the DFA has valid transitions for every symbol in its alphabet.
 //!
 //! # Documentation
 //!
-//! [nifty::dfa](dfa/index.html)
+//! [nifty::dfa](dfa/index.html) d
+//! [nifty::make_dfa!](macro.make_dfa!.html)
 //!
 //! # Examples
 //!
-//! ## Using the DFABuilder
+//! ## Building a DFA
 //!
 //! <img src="https://raw.githubusercontent.com/ObliqueMotion/nifty/master/images/example.png">
 //!
@@ -118,7 +119,7 @@
 //! ```
 
 pub mod dfa;
-/// Macro [make_dfa!](macro.make_dfa.html) creates a [DFA](dfa/struct.DFA.html) using the [DFABuilder](dfa/struct.DFABuilder.html).
+/// Macro [make_dfa!](macro.make_dfa!.html) creates a [DFA](dfa/struct.DFA.html) using the [DFABuilder](dfa/struct.DFABuilder.html).
 ///
 /// 1. `make_dfa!` **must** take `states{...}` first.
 /// 2. `make_dfa!` **may** take any of `start{...}`, `accept{...}`, `dead{...}`, `goal{...}` in any order.
