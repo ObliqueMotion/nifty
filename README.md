@@ -7,7 +7,7 @@ A Generic Deterministic Finite-State Automaton Generator Written in Rust
 
 **Code Represntation**
 ```rust
-use nifty::DFABuilder;
+use nifty::dfa::DFABuilder;
 
 fn main() {
     let q0 = "q0";
