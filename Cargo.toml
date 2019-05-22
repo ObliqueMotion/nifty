@@ -1,0 +1,12 @@
+[package]
+name = "nifty"
+version = "0.1.0"
+authors = ["ObliqueMotion <aeketn@gmail.com>"]
+edition = "2018"
+readme = "README.md"
+license-file = "LICENSE"
+documentation = "https://docs.rs/nifty"
+description = "A library for generating Deterministic Finite State Automata (DFA)."
+repository = "https://github.com/ObliqueMotion/nifty"
+categories = ["parsing"]
+keywords = ["dfa", "machine", "finite", "state", "automaton"]
