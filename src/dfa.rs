@@ -45,7 +45,6 @@ where
     S: Eq + Hash + Clone + Debug,
     T: Eq + Hash + Clone + Debug,
 {
-
     /// Returns a description of the language that this `DFA` recognizes.
     pub fn recognizes(&self) -> &str {
         &self.recognizes
@@ -72,7 +71,7 @@ where
     }
 
     /// Returns the start state of the `DFA`.
-    /// 
+    ///
     /// * Panics if no start state is defined for the DFA.
     pub fn start(&self) -> Rc<S> {
         self.start
@@ -135,7 +134,7 @@ where
     }
 
     /// Evaluates an input that will be either accepted or rejected by the DFA.
-    /// 
+    ///
     /// * Panics if the input contains symbols that are not in the DFA's alphabet.
     pub fn evaluate(&mut self, inputs: impl Iterator<Item = T>) -> Evaluation {
         self.restart();
@@ -171,7 +170,7 @@ where
     }
 
     /// Adds a state to the `DFA`.
-    /// 
+    ///
     /// * Panics if a state is added after any transition has been added. Must add all states before transitions.
     pub fn add_state(mut self, state: &S) -> Self {
         if !self.dfa.transitions.is_empty() {
@@ -182,7 +181,7 @@ where
     }
 
     /// Marks a state as an accept state.
-    /// 
+    ///
     /// * Panics if the provided state does not exist in this [DFA](struct.DFA.html).
     pub fn mark_accept_state(mut self, state: &S) -> Self {
         match self.dfa.states.get(state) {
@@ -198,7 +197,7 @@ where
     }
 
     /// Marks a state as a goal state.
-    /// 
+    ///
     /// * This will automatically add the goal state to the list of accept states.
     /// * Panics if the provided state does not exist in this [DFA](struct.DFA.html).
     pub fn mark_goal_state(mut self, state: &S) -> Self {
@@ -222,7 +221,7 @@ where
     }
 
     /// Marks a state as a dead state.
-    /// 
+    ///
     /// * Panics if the provided state does not exist in this [DFA](struct.DFA.html).
     pub fn mark_dead_state(mut self, state: &S) -> Self {
         match self.dfa.states.get(state) {
@@ -241,7 +240,7 @@ where
     }
 
     /// Marks a state as the start state.
-    /// 
+    ///
     /// * Panics if the provided state does not exist in this [DFA](struct.DFA.html).
     /// * Panics if the [DFA](struct.DFA.html) already has a defined start state.
     pub fn mark_start_state(mut self, state: &S) -> Self {
@@ -262,7 +261,7 @@ where
     }
 
     /// Adds a transition from one state to another.
-    /// 
+    ///
     /// * Panics if the transition is coming from a **dead** state. A dead state's transitions cannot be overwritten.
     /// * Panics if the transition is coming from a **goal** state. A goal state's transitions cannot be overwritten.
     /// * Panics if the *from* state does not exist in the [DFA](struct.DFA.html).
@@ -298,7 +297,7 @@ where
     }
 
     /// Builds a [DFA](struct.dfa.html) and consumes the builder.
-    /// 
+    ///
     /// * Panics if the [DFA](struct.dfa.html) has no states.
     /// * Panics if the [DFA](struct.dfa.html) has no defined start state.
     /// * Panics if each state in the [DFA](struct.dfa.html) does not have a transition for every symbol in the alphabet.
