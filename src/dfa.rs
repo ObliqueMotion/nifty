@@ -1,3 +1,4 @@
+use std::borrow::Borrow;
 use std::collections::{HashMap, HashSet};
 use std::fmt::Debug;
 use std::hash::Hash;
@@ -136,10 +137,13 @@ where
     /// Evaluates an input that will be either accepted or rejected by the DFA.
     ///
     /// * Panics if the input contains symbols that are not in the DFA's alphabet.
-    pub fn evaluate(&mut self, inputs: impl Iterator<Item = T>) -> Evaluation {
+    pub fn evaluate<R>(&mut self, inputs: impl Iterator<Item = R>) -> Evaluation
+    where
+        R: Borrow<T>,
+    {
         self.restart();
         for transition in inputs {
-            self.next(&transition);
+            self.next(transition.borrow());
         }
         self.eval_current()
     }
