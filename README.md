@@ -130,37 +130,37 @@ fn main() {
         start  { q0 }
         goal   { q3 }
         transitions {
-            'a' => (q0, q0)
-            'a' => (q1, q2)
-            'a' => (q2, q0)
+            'a' => (q0, q0) 
+            'a' => (q1, q2) 
+            'a' => (q2, q0) 
 
-            'b' => (q0, q1)
-            'b' => (q1, q1)
-            'b' => (q2, q3)
+            'b' => (q0, q1) 
+            'b' => (q1, q1) 
+            'b' => (q2, q3) 
         }
         recognizes {
             "contains { bab }"
         }
-    };
+    };  
 
     let path = "abaababa".chars()
-        .map(|c| dfa.get_next(&c))
+        .map(|c| (c, dfa.get_next(&c)))
         .collect::<Vec<_>>();
 
-    dbg!(&path);
+    for tuple in &path {
+        println!("{:?}", tuple);
+    }   
 }
 ```
 
 **Output**
 ```text
-[src/main.rs:30] &path = [
-   "Seen { }",
-   "Seen { b }",
-   "Seen { ba }",
-   "Seen { }",
-   "Seen { b }",
-   "Seen { ba }",
-   "Seen { bab }",
-   "Seen { bab }",
-]
+('a', "Seen { }")
+('b', "Seen { b }")
+('a', "Seen { ba }")
+('a', "Seen { }")
+('b', "Seen { b }")
+('a', "Seen { ba }")
+('b', "Seen { bab }")
+('a', "Seen { bab }")
 ```
